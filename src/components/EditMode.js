@@ -73,7 +73,7 @@ const EditMode = React.createClass({
               placeholder="Title" />
 
             <div className="show-hide-languages">
-              <LanguageSelect ref="languages" />
+              <LanguageSelect ref="languages" editLang={this.state.activeSnippet.lang}/>
             </div>
           </div>
 

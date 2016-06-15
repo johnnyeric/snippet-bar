@@ -4,14 +4,15 @@ const ipcMain = require('electron').ipcMain;
 const menubar = require('menubar');
 
 const Menu = require('menu');
+var path = require('path');
 
 const appPath = __dirname;
 
 const config = {
   openDevTools: false,
   title:        'snippets',
-  icon:         appPath + '/static/img/brackets.png',
-  iconAlt:      appPath + '/static/img/brackets-alt.png'
+  icon:         path.join(__dirname,'/static/img/code-snippet-icon.png'),
+  iconAlt:      path.join(__dirname,'/static/img/code-snippet-icon.png')
 };
 
 const mb = menubar({
@@ -48,6 +49,10 @@ mb.app.on('window-all-closed', () => {
     mb.app.quit();
   }
 });
+
+mb.on('focus-lost', () => {
+    setTimeout(() => mb.hideWindow(),100);
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

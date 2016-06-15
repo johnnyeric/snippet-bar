@@ -38,6 +38,7 @@ const _languages = [
   'php',
   'python',
   'ruby',
+  'sql',
   'scss'
 ];
 let _syntax = false;

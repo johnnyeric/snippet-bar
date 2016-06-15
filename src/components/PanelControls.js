@@ -1,5 +1,6 @@
 const React = require('react');
 const Clipboard = require('clipboard');
+const SweetAlert = require('sweetalert-react');
 
 const SnippetActions = require('../actions/SnippetActions');
 const SnippetStore   = require('../stores/SnippetStore')
@@ -27,11 +28,7 @@ const PanelControls = React.createClass({
   },
 
   confirmDelete() {
-    if (confirm("You sure you want to delete this snippet?")) {
-      SnippetActions.destroy(() => {
-        this.props.showNotification('Snippet Deleted!');
-      });
-    }
+    this.setState({show: true});
   },
 
   showButtons() {
@@ -55,6 +52,24 @@ const PanelControls = React.createClass({
     return(
       <div className="panel-controls">
         {this.showButtons()}
+        <SweetAlert
+            show={this.state.show}
+            title="Delete"
+            text="Confirm delete?"
+            showCancelButton
+            onConfirm={() => {
+                this.setState({ show: false });
+                SnippetActions.destroy(() => {
+                    this.props.showNotification('Snippet Deleted!');
+                });
+            }}
+            onCancel={() => {
+                console.log('cancel'); // eslint-disable-line no-console
+                this.setState({ show: false });
+            }}
+            onEscapeKey={() => this.setState({ show: false })}
+            onOutsideClick={() => this.setState({ show: false })}
+        />
       </div>
     );
   }
